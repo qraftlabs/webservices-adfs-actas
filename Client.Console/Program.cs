@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ServiceModel.Security;
 
 namespace Client
 {
@@ -14,7 +15,18 @@ namespace Client
             Console.WriteLine("Press ENTER to call the service");
             Console.ReadLine();
 
-            client.DoWork();
+            try
+            {
+                client.DoWork();
+            }
+            catch (SecurityAccessDeniedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.WriteLine("Press ENTER to close");
+            Console.ReadLine();
+
         }
     }
 }

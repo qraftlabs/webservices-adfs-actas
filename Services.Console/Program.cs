@@ -14,6 +14,7 @@ namespace Services.ConsoleHost
             host.Open();
 
             Console.WriteLine("Service running on {0}", host.Description.Endpoints[0].Address);
+            Console.WriteLine("Press ENTER to close it");
             Console.ReadLine();
         }
     }
