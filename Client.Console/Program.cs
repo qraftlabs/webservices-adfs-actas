@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel.Security;
 using System.IdentityModel.Tokens;
+using System.Net;
 
 namespace Client
 {
@@ -11,21 +12,26 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+
             var client = new Services.SampleServiceClient();
-
-            SecurityToken token = TokenHelper.GetSAML2TokenWithUserNameCredentials(
-                                                    user: "Administrator",
-                                                    password: "u794Wav5!",
-                                                    usernamePasswordEndpoint: "https://test-adfs.auth10.com/adfs/services/trust/13/usernamemixed",
-                                                    relyingPartyIdentifier: "urn:my-service");
-
-            TokenHelper.AttachToken(client.ChannelFactory, token);
 
             Console.WriteLine("Press ENTER to call the service");
             Console.ReadLine();
 
+            SecurityToken token = TokenHelper.GetSAML2TokenWithUserNameCredentials(
+                                                    user: "REPLACE_WITH_USER",
+                                                    password: "REPLACE_WITH_PASSWORD",
+                                                    usernamePasswordEndpoint: "https://<REPLACE_WITH_ADFS>/adfs/services/trust/13/usernamemixed",
+                                                    relyingPartyIdentifier: "REPLACE_WITH_RELYINGPARTY_IDENTIFIER");
+
+            Console.WriteLine("Getting token from ADFS...");
+            TokenHelper.AttachToken(client.ChannelFactory, token);
+
+            
             try
             {
+                Console.WriteLine("Calling service...");
                 client.DoWork();
             }
             catch (SecurityAccessDeniedException ex)
