@@ -11,7 +11,7 @@ This is the simplest it can get... well simpler would be to use plain HTTP for a
 
 ### Client
 
-* [Getting a token using user/password](blob/master/Client.Console/Program.cs#L22)
+* [Getting a token using user/password](/blob/master/Client.Console/Program.cs#L22)
 * [Attaching the token to the SOAP message](blob/master/Client.Console/Program.cs#L29)
 * [The corresponding behavior that will attach the token](blob/master/Client.Console/AttachTokenEndpointBehavior.cs)
 * [Client side config, simple basicHttpBinding](blob/master/Client.Console/app.config)
